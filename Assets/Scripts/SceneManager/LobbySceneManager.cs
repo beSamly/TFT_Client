@@ -65,16 +65,17 @@ namespace Assets.SceneManager
 
         public void PendingMatchCanceled()
         {
-            acceptMatchButton.GetComponent<Button>().interactable = true;
+            SetAllButtonInteractable();
+
             acceptMatchButton.SetActive(false);
             matchCancelButton.SetActive(true);
         }
 
         public void MatchCancelRes()
         {
-            matchCancelButton.GetComponent<Button>().interactable = true;
-            matchCancelButton.SetActive(false);
+            SetAllButtonInteractable();
 
+            matchCancelButton.SetActive(false);
             acceptMatchButton.SetActive(false);
             matchRequestButton.SetActive(true);
         }
@@ -89,6 +90,13 @@ namespace Assets.SceneManager
             {
 
             }
+        }
+
+        private void SetAllButtonInteractable()
+        {
+            acceptMatchButton.GetComponent<Button>().interactable = true;
+            matchCancelButton.GetComponent<Button>().interactable = true;
+            matchRequestButton.GetComponent<Button>().interactable = true;
         }
     }
 }
