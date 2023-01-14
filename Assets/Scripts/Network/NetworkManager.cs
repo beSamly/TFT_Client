@@ -30,6 +30,11 @@ namespace Network
             client.OnRecv(callback);
         }
 
+        public void SetOnConnectCallback(Action callback)
+        {
+            client.OnConnect(callback);
+        }
+
         public void SendLoginRequest(string email)
         {
             LoginRequest req = new LoginRequest();

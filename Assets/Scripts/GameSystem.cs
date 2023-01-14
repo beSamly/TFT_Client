@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets
 {
@@ -12,7 +13,8 @@ namespace Assets
     {
         public NetworkManager networkManager;
         private ThreadManager threadManager;
-
+        private Action[] actionList;
+ 
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -24,6 +26,7 @@ namespace Assets
         private void Start()
         {
             networkManager.Init();
+            networkManager.SetOnConnectCallback(OnConnectToServer);
             networkManager.SetRecvCallback(OnRecvPacket);
         }
 
@@ -43,7 +46,14 @@ namespace Assets
             threadManager.ExecuteOnMainThread(() =>
             {
                 networkManager.HandlePacket(data);
-                //packetController.HandlePacket(data);
+            });
+        }
+
+        private void OnConnectToServer()
+        {
+            threadManager.ExecuteOnMainThread(() =>
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
             });
         }
     }

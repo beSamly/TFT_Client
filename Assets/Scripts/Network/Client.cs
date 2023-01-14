@@ -16,6 +16,11 @@ namespace Network
             tcp = new TCP();
         }
 
+        public void OnConnect(Action callback)
+        {
+            tcp.OnConnect(callback);
+        }
+
         public void OnRecv(Action<byte[]> callback)
         {
             tcp.OnRecv(callback);
@@ -40,9 +45,15 @@ namespace Network
             private NetworkStream stream;
             private byte[] receiveBuffer;
             private Action<byte[]> OnRecvCallback;
+            private Action OnConnectCallback;
             public void OnRecv(Action<byte[]> OnRecvCallback)
             {
                 this.OnRecvCallback = OnRecvCallback;
+            }
+
+            public void OnConnect(Action callback)
+            {
+                this.OnConnectCallback = callback;
             }
 
             public void Connect(string address, int port)
@@ -69,6 +80,7 @@ namespace Network
                 stream = socket.GetStream();
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
+                OnConnectCallback();
             }
 
             public void SendData(byte[] dataBuffer)

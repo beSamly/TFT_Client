@@ -18,7 +18,8 @@ namespace Network
         enum Auth
         {
             LOGIN_REQ = 1,
-            LOGIN_RES
+            LOGIN_RES,
+            LOGOUT_REQ
         }
 
         enum Match

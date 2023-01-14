@@ -41,6 +41,7 @@ namespace Assets.SceneManager
             {
                 LoadGameSystem();
             }
+            matchRequestButton.GetComponent<Button>().interactable = false;
             gameSystem.networkManager.SendMatchRequest();
         }
 
@@ -59,25 +60,32 @@ namespace Assets.SceneManager
         /* Network Response */
         public void PendingMatchCreated()
         {
+            Debug.Log("Pending Match Created");
+            matchRequestButton.SetActive(false);
             acceptMatchButton.SetActive(true);
             matchCancelButton.SetActive(false);
         }
 
         public void PendingMatchCanceled()
         {
+            Debug.Log("Pending Match Canceled");
+
             SetAllButtonInteractable();
 
+            matchRequestButton.SetActive(false);
             acceptMatchButton.SetActive(false);
             matchCancelButton.SetActive(true);
         }
 
         public void MatchCancelRes()
         {
+            Debug.Log("Match Cancel Res");
+
             SetAllButtonInteractable();
 
+            matchRequestButton.SetActive(true);
             matchCancelButton.SetActive(false);
             acceptMatchButton.SetActive(false);
-            matchRequestButton.SetActive(true);
         }
 
         public void MatchRequestResponse(bool result)
